@@ -65,23 +65,19 @@ SELECT e.ENAME AS Employee, m.ENAME AS Manager
 FROM HR.EMP e LEFT JOIN HR.EMP m ON e.MGR = m.EMPNO
 ORDER BY e.ENAME;
 
-CREATE OR REPLACE PROCEDURE get_highest_salary (
-    p_salary OUT HR.EMP.SAL%TYPE
-)
-AS
+CREATE OR REPLACE PROCEDURE get_highest_salary(p_salary OUT NUMBER) IS
 BEGIN
-    SELECT MAX(SAL)
-    INTO p_salary
-    FROM HR.EMP;
+  SELECT MAX(salary) INTO p_salary FROM HR.EMPLOYEES;
 END;
 /
 
 SET SERVEROUTPUT ON;
 
 DECLARE
-    v_salary HR.EMP.SAL%TYPE;
+--variable to hold the highest salary
+  v_salary NUMBER;
 BEGIN
-    get_highest_salary(v_salary);
-    DBMS_OUTPUT.PUT_LINE('Highest salary: ' || v_salary);
+  get_highest_salary(v_salary);
+  DBMS_OUTPUT.PUT_LINE('Highest salary: ' || v_salary);
 END;
 /
